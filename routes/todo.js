@@ -4,6 +4,7 @@ var router = express.Router();
 const mongoose = require('mongoose')
 const ToDo = require('../Model/Todo-Model')
 
+//create todo data in post method
 router.post('/create',async (req,res)=>{
     const{todo} = req.body;
     let todoModel = new ToDo({
@@ -15,10 +16,14 @@ router.post('/create',async (req,res)=>{
         console.log('Todo Added Succesfully');
     }).catch((err)=> console.log(err))
 })
+
+//list created data in get method
 router.get('/list',async (req,res)=>{
     const listTodo = await ToDo.find();
     res.json(listTodo);
 })
+
+//delete unnececssary data using delete method
 router.delete('/delete/:_id',async (req,res)=>{
     const _id = req.params
     ToDo.deleteOne({_id}).then(result=>{
@@ -27,6 +32,7 @@ router.delete('/delete/:_id',async (req,res)=>{
     }).catch((err)=> console.log(err))
 })
 
+//edit data using put method
 router.put('/update/:_id',async (req,res)=>{
     const _id = req.params;
     const{todo} = req.body;
